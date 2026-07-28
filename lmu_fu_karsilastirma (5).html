@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LMU München · FU Berlin — Karşılaştırma</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f3ee; --card:#ffffff; --band:#efece4;
+  --ink:#2b2e3b; --ink2:#5f6470; --ink3:#9a9ba4;
+  --line:#e4e0d6;
+  --lmu:#3f57c9; --lmu-soft:#e9edff;
+  --fu:#0f8a62; --fu-soft:#e4f4ec;
+  --win:#e7f5ec;
+  --amber:#c8922a;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;}
+
+.topbar{position:sticky;top:0;z-index:50;background:rgba(245,243,238,0.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;padding:12px 22px;}
+.topbar b{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;letter-spacing:0.5px;color:var(--ink);}
+.topbar span{font-size:12px;color:var(--ink3);letter-spacing:1px;text-transform:uppercase;}
+.topnav{margin-left:auto;display:flex;gap:6px;}
+.topnav a{font-size:12px;color:var(--ink2);text-decoration:none;padding:6px 12px;border:1px solid var(--line);border-radius:20px;transition:.15s;}
+.topnav a:hover{background:var(--card);color:var(--ink);}
+
+.wrap{max-width:980px;margin:0 auto;padding:26px 22px 64px;}
+
+/* HERO */
+.hero{text-align:center;padding:34px 0 26px;}
+.hero h1{font-family:'Syne',sans-serif;font-size:40px;font-weight:800;line-height:1.05;margin-bottom:10px;}
+.hero p{font-size:15px;color:var(--ink2);max-width:640px;margin:0 auto;}
+
+/* CARDS */
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:26px 0 8px;}
+.uni{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;text-align:center;box-shadow:0 2px 14px rgba(60,55,45,0.05);}
+.uni.lmu{border-top:4px solid var(--lmu);}
+.uni.fu{border-top:4px solid var(--fu);}
+.uni-city{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink3);margin-bottom:6px;}
+.uni-name{font-family:'Syne',sans-serif;font-size:22px;font-weight:700;line-height:1.15;margin-bottom:2px;}
+.uni.lmu .uni-name{color:var(--lmu);}
+.uni.fu .uni-name{color:var(--fu);}
+.uni-full{font-size:12.5px;color:var(--ink2);margin-bottom:16px;}
+.rank-lbl{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink3);margin-bottom:2px;}
+.rank-num{font-family:'Syne',sans-serif;font-weight:800;line-height:1;font-size:52px;}
+.uni.lmu .rank-num{color:var(--lmu);}
+.uni.fu .rank-num{color:var(--fu);}
+.rank-note{font-size:12px;color:var(--ink3);margin-top:4px;}
+
+/* INFO BOXES */
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px;}
+.box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;}
+.box h4{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--amber);margin-bottom:7px;}
+.box p{font-size:14px;color:var(--ink);}
+
+/* SECTIONS */
+.sec{margin-top:44px;}
+.sec-eyebrow{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--ink3);margin-bottom:4px;}
+.sec-title{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;margin-bottom:4px;}
+.sec-sub{font-size:13.5px;color:var(--ink2);margin-bottom:18px;}
+
+/* TABLE */
+.tscroll{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--card);}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:560px;}
+thead th{position:sticky;top:0;background:var(--band);padding:13px 14px;text-align:left;font-weight:700;font-size:13px;border-bottom:1px solid var(--line);}
+thead th.lmu{color:var(--lmu);}
+thead th.fu{color:var(--fu);}
+thead th:first-child{color:var(--ink3);font-weight:600;font-size:12px;letter-spacing:1px;text-transform:uppercase;}
+.band td{background:var(--band);font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink2);padding:9px 14px;}
+tbody td{padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink);}
+tbody tr:last-child td{border-bottom:none;}
+.crit{font-weight:600;color:var(--ink2);white-space:nowrap;}
+.win{background:var(--win);position:relative;}
+.win::after{content:'✓';position:absolute;top:8px;right:8px;font-size:10px;color:var(--fu);opacity:.6;}
+.legend{font-size:12.5px;color:var(--ink3);margin-top:10px;}
+
+/* KARAR CARDS */
+.kgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.kcard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;}
+.kcard.lmu{border-left:4px solid var(--lmu);}
+.kcard.fu{border-left:4px solid var(--fu);}
+.kcard .rank-lbl{margin-bottom:3px;}
+.kcard-name{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:7px;}
+.kcard.lmu .kcard-name{color:var(--lmu);}
+.kcard.fu .kcard-name{color:var(--fu);}
+.kcard p{font-size:13.5px;color:var(--ink2);}
+.kblock{margin-bottom:22px;}
+.kblock h3{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin-bottom:11px;}
+
+.foot{text-align:center;font-size:12px;color:var(--ink3);margin-top:44px;line-height:1.7;}
+
+@media (max-width:700px){
+  .wrap{padding:20px 14px 52px;}
+  .hero{padding:22px 0 16px;}
+  .hero h1{font-size:26px;}
+  .hero p{font-size:14px;}
+  .cards,.pair,.kgrid{grid-template-columns:1fr;}
+  .rank-num{font-size:46px;}
+  .topnav{display:none;}
+  .sec{margin-top:34px;}
+  .sec-title{font-size:22px;}
+  .kblock h3{font-size:16px;}
+
+  /* Tablo → mobilde her kriter bir kart (yatay kaydırma yok) */
+  .tscroll{overflow:visible;border:none;background:none;border-radius:0;}
+  table{min-width:0;font-size:14px;border-collapse:separate;border-spacing:0;}
+  thead{display:none;}
+  table,tbody,tr,td{display:block;width:100%;}
+
+  tbody tr{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:12px;
+    margin-bottom:11px;
+    overflow:hidden;
+    box-shadow:0 1px 8px rgba(60,55,45,0.04);
+  }
+  tbody tr.band{background:none;border:none;box-shadow:none;margin:24px 0 9px;}
+  tbody tr.band td{
+    background:var(--band);border-radius:8px;padding:10px 14px;
+    font-size:12px;font-weight:800;letter-spacing:1.4px;
+    text-transform:uppercase;color:var(--ink2);
+  }
+
+  tbody td{border:none;border-top:1px solid var(--line);padding:11px 14px;color:var(--ink);line-height:1.5;}
+  td.crit{border-top:none;background:var(--band);font-weight:800;font-size:13.5px;color:var(--ink);white-space:normal;}
+
+  /* Her değer hücresinin üstünde hangi üni olduğu yazsın */
+  tbody td:nth-of-type(2)::before,
+  tbody td:nth-of-type(3)::before{
+    display:block;font-size:10.5px;font-weight:800;letter-spacing:.6px;
+    text-transform:uppercase;margin-bottom:3px;
+  }
+  tbody td:nth-of-type(2)::before{content:"LMU München";color:var(--lmu);}
+  tbody td:nth-of-type(3)::before{content:"FU Berlin";color:var(--fu);}
+
+  .win::after{top:11px;right:12px;}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <b>Master Kararı</b>
+  <span>LMU · FU Berlin</span>
+  <nav class="topnav">
+    <a href="#tablo">Karşılaştırma</a>
+    <a href="#karar">Hangisi?</a>
+  </nav>
+</div>
+
+<div class="wrap">
+
+  <div class="hero">
+    <h1>LMU München — FU Berlin<br>Karşılaştırması</h1>
+    <p>Politikwissenschaft (Siyaset Bilimi) yüksek lisansı için iki üniversite: dünya sıralaması, kariyer, şehir ve günlük hayat yan yana.</p>
+  </div>
+
+  <div class="cards">
+    <div class="uni lmu">
+      <div class="uni-city">Münih</div>
+      <div class="uni-name">LMU München</div>
+      <div class="uni-full">Ludwig-Maximilians-Universität</div>
+      <div class="rank-lbl">Dünya Sıralaması</div>
+      <div class="rank-num">#61</div>
+      <div class="rank-note">QS Dünya Sıralaması 2026 · Almanya'da 2.<br>Siyaset Bilimi (alan): ~51–100</div>
+    </div>
+    <div class="uni fu">
+      <div class="uni-city">Berlin</div>
+      <div class="uni-name">FU Berlin</div>
+      <div class="uni-full">Freie Universität Berlin</div>
+      <div class="rank-lbl">Dünya Sıralaması</div>
+      <div class="rank-num">#98</div>
+      <div class="rank-note">QS Dünya Sıralaması 2026 · Almanya'da 4.<br>Siyaset Bilimi (alan): #32 · Almanya 1.</div>
+    </div>
+  </div>
+
+  <div class="pair">
+    <div class="box">
+      <h4>Ortak Yönleri</h4>
+      <p>İkisi de Almanya'nın "Excellence" (seçkin) üniversitelerinden ve siyaset biliminde ülkenin en iyileri arasında. İkisi de devlet üniversitesi, öğrenim harcı yok — sadece dönemlik katkı payı var. İkisi de dünyada tanınan isimler.</p>
+    </div>
+    <div class="box">
+      <h4>Temel Fark</h4>
+      <p>FU Berlin → uluslararası ilişkiler ve politika ağırlıklı, başkentin fırsatları. LMU → daha yüksek genel prestij, Münih'in güçlü iş piyasası ve daha sakin/güvenli bir şehir hayatı.</p>
+    </div>
+  </div>
+
+  <!-- TABLO -->
+  <div class="sec" id="tablo">
+    <div class="sec-eyebrow">Kriter Kriter</div>
+    <div class="sec-title">Karşılaştırma Tablosu</div>
+    <div class="sec-sub">Yeşil işaretli hücre = o konuda öne çıkan / avantajlı taraf.</div>
+
+    <div class="tscroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Kriter</th>
+            <th class="lmu">LMU München</th>
+            <th class="fu">FU Berlin</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="band"><td colspan="3">Genel</td></tr>
+          <tr><td class="crit">Genel Dünya Sıralaması (QS 2026)</td><td class="win">#61 — Almanya'da 2.</td><td>#98 — Almanya'da 4.</td></tr>
+          <tr><td class="crit">Siyaset Bilimi Sıralaması (QS by Subject 2025)</td><td>~51–100 bandı</td><td class="win">#32 dünya — Almanya'nın 1.'si (OSI)</td></tr>
+          <tr><td class="crit">Şehir</td><td>Münih (Bavyera)</td><td>Berlin (başkent)</td></tr>
+          <tr><td class="crit">Program Dili</td><td>Almanca (bazı dersler İngilizce)</td><td>Almanca (İngilizce seçmeliler daha fazla)</td></tr>
+          <tr><td class="crit">Dönemlik Ücret</td><td class="win">97 € (ulaşım kartı hariç)</td><td>~359 € (ulaşım kartı dahil)</td></tr>
+
+          <tr class="band"><td colspan="3">Kariyer & Gelecek</td></tr>
+          <tr><td class="crit">Prestij & İşveren Tercihi</td><td>Genel marka ve işveren itibarı daha yüksek; özel sektör ve büyük şirketler LMU + Münih'i tercih eder</td><td>Siyaset bilimi & uluslararası ilişkilerde Almanya'nın en prestijli adı; kamu, diplomasi, düşünce kuruluşları ve akademide öne çıkar</td></tr>
+          <tr><td class="crit">Zorunlu Staj</td><td>Yok (isteğe bağlı)</td><td>Var — zorunlu Berufspraktikum (~6 hafta / 240 saat, 10 kredi)</td></tr>
+          <tr><td class="crit">Özel Sektör</td><td class="win">Güçlü (Münih'te büyük şirketler)</td><td>Orta</td></tr>
+          <tr><td class="crit">AB / Uluslararası Kurumlar</td><td>Orta</td><td class="win">Güçlü (Berlin + Brüksel ağı)</td></tr>
+          <tr><td class="crit">Diplomasi / Dışişleri</td><td>Orta</td><td class="win">Çok güçlü (bakanlıklar başkentte)</td></tr>
+          <tr><td class="crit">Akademisyenlik / Doktora</td><td class="win">Çok güçlü</td><td class="win">Çok güçlü</td></tr>
+          <tr><td class="crit">Mezuniyet Sonrası İş Piyasası</td><td class="win">Çok güçlü (yüksek maaş, düşük işsizlik)</td><td>İyi (startup, kamu, medya, STK)</td></tr>
+          <tr><td class="crit">Okurken Çalışma (HiWi)</td><td>İyi (~485 €/ay, 8 saat/hafta)</td><td class="win">Çok iyi (~520 €/ay, daha çok pozisyon)</td></tr>
+
+          <tr class="band"><td colspan="3">Şehir & Yaşam</td></tr>
+          <tr><td class="crit">Şehir Büyüklüğü</td><td>~1,5 milyon</td><td>~3,7 milyon</td></tr>
+          <tr><td class="crit">Güvenlik</td><td class="win">Çok güvenli — Almanya'nın en güvenli büyük şehri (üst üste 50. kez). En yaygın sorun yankesicilik / hırsızlık, özellikle geceleri merkez tren garı (Hauptbahnhof) çevresinde. Yaralama gibi ağır suçlar nadir.</td><td>Orta — büyük metropol. Dikkatli olunacak yerler: Alexanderplatz / Mitte, Neukölln, Kreuzberg (yankesicilik, uyuşturucu ortamı, ara sıra kavga; ev hırsızlığı son yıllarda artışta). Buna karşın FU'nun bulunduğu Dahlem semti sakin ve güvenli.</td></tr>
+          <tr><td class="crit">Türk Topluluğu</td><td>~15–25 bin</td><td class="win">200 bin+ (Almanya'nın en büyüğü)</td></tr>
+          <tr><td class="crit">Nasıl Bir Hayat?</td><td>Sakin, temiz, düzenli; Alpler ve doğa yakın; yüksek yaşam kalitesi ama pahalı</td><td>Hareketli, çok kültürlü; sanat ve gece hayatı; daha özgür ve daha uygun fiyatlı</td></tr>
+          <tr><td class="crit">Kaldığın Yerden Okula (günlük)</td><td class="win">~30–35 dk · 2 araç (U-Bahn + tramvay/otobüs) · bisikletle ~20 dk · okul ile aynı yakada</td><td>~45–50 dk · 2–3 araç · okul (Dahlem) şehrin güneybatı ucunda, uzak</td></tr>
+          <tr><td class="crit">Yıllık Turist</td><td>~8–9 milyon</td><td>~12–13 milyon (Avrupa'nın 3. en çok ziyaret edilen şehri)</td></tr>
+
+          <tr class="band"><td colspan="3">İklim & Hava (yıllık ortalama)</td></tr>
+          <tr><td class="crit">Ortalama Sıcaklık</td><td>~8,6 °C</td><td>~9,6 °C (biraz daha ılık)</td></tr>
+          <tr><td class="crit">En Soğuk / En Sıcak Ay</td><td>Ocak ~ −0,5 °C · Temmuz ~18 °C</td><td>Ocak ~ +0,5 °C · Temmuz ~19 °C</td></tr>
+          <tr><td class="crit">Kar Günü (yılda)</td><td>~40–45 gün — Almanya'nın en karlı büyük şehri</td><td>~20–25 gün — kışın az kar</td></tr>
+          <tr><td class="crit">Yağışlı Gün (yılda)</td><td>~130 gün · ~950 mm (daha yağışlı)</td><td>~106 gün · ~570 mm (belirgin daha kuru)</td></tr>
+          <tr><td class="crit">Güneş & Karanlık Kış</td><td>Kışın ~3,3 saat/gün güneş — Almanya'nın en güneşli büyük şehri; Aralık gün batımı ~16:25</td><td>Kışın ~2,2 saat/gün, gri ve kapalı; daha kuzeyde olduğundan Aralık gün batımı ~15:55 (daha erken kararır)</td></tr>
+          <tr><td class="crit">Genel Karakter</td><td>Daha soğuk ve karlı; Alpler yakın; Föhn rüzgârıyla ara sıra ani açık/ılık günler ve dağ manzarası</td><td>Daha kuru ama düz, gri ve rüzgârlı; kışlar az karlı, gri dönemler uzun</td></tr>
+
+          <tr class="band"><td colspan="3">Aylık Maliyet & Günlük Hayat</td></tr>
+          <tr><td class="crit">Aylık Toplam Maliyet</td><td>1.560–1.930 €</td><td class="win">1.210–1.599 €</td></tr>
+          <tr><td class="crit">Kira Zorluğu</td><td>Çok zor (Almanya'nın en pahalı kira piyasası)</td><td class="win">Zor ama daha uygun</td></tr>
+          <tr><td class="crit">Devlet Yurdu Bekleme Süresi</td><td>4–6 dönem</td><td class="win">3–5 dönem</td></tr>
+          <tr><td class="crit">Ulaşım (aylık)</td><td>Ayrı alınır (~38–58 €)</td><td class="win">Dönemlik ücrete dahil (~37 €)</td></tr>
+          <tr><td class="crit">Döner (ortalama)</td><td>~6–7 €</td><td class="win">~5–7 € (genelde biraz ucuz)</td></tr>
+          <tr><td class="crit">Mensa (öğrenci öğünü)</td><td>~3–5 €</td><td>~3–5 €</td></tr>
+
+          <tr class="band"><td colspan="3">İstanbul Bağlantısı (Turkish Airlines)</td></tr>
+          <tr><td class="crit">Günlük Direkt Uçuş (THY)</td><td>~4–5 uçuş/gün</td><td>~4–5 uçuş/gün</td></tr>
+          <tr><td class="crit">Uçuş Süresi</td><td class="win">~2 saat 45 dk</td><td>~2 saat 55 dk</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- KARAR -->
+  <div class="sec" id="karar">
+    <div class="sec-eyebrow">Hedefe Göre</div>
+    <div class="sec-title">Hangisi Daha İyi?</div>
+    <div class="sec-sub">Neyi önemsediğine göre öne çıkan üniversite değişiyor.</div>
+
+    <div class="kblock">
+      <h3>Diplomasi · Dış Politika · Uluslararası Kurumlar</h3>
+      <div class="kgrid">
+        <div class="kcard fu">
+          <div class="rank-lbl">1. Tercih</div>
+          <div class="kcard-name">FU Berlin</div>
+          <p>Başkentte olması büyük avantaj: dışişleri, düşünce kuruluşları ve uluslararası kurumlar hep yakında. Uluslararası ilişkiler için Almanya'nın en güçlü programlarından.</p>
+        </div>
+        <div class="kcard lmu">
+          <div class="rank-lbl">2. Tercih</div>
+          <div class="kcard-name">LMU München</div>
+          <p>Bu alanda da iyi ama Berlin kadar merkezî bir ağı yok. Akademik ortamı güçlü.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="kblock">
+      <h3>Özel Sektör · İş Bulma · Yüksek Maaş</h3>
+      <div class="kgrid">
+        <div class="kcard lmu">
+          <div class="rank-lbl">1. Tercih</div>
+          <div class="kcard-name">LMU München</div>
+          <p>Münih Almanya'nın en güçlü iş piyasalarından — büyük şirketler, düşük işsizlik, yüksek maaşlar. Mezuniyet sonrası iş imkânı için avantajlı.</p>
+        </div>
+        <div class="kcard fu">
+          <div class="rank-lbl">2. Tercih</div>
+          <div class="kcard-name">FU Berlin</div>
+          <p>Startup, teknoloji, medya ve kamu tarafında fırsat çok; maaşlar Münih'e göre biraz daha düşük.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="kblock">
+      <h3>Akademisyenlik · Doktora</h3>
+      <div class="kgrid">
+        <div class="kcard lmu">
+          <div class="rank-lbl">Çok Güçlü</div>
+          <div class="kcard-name">LMU München</div>
+          <p>Yüksek genel prestij ve geniş akademik yelpaze. Doktora için sağlam bir zemin.</p>
+        </div>
+        <div class="kcard fu">
+          <div class="rank-lbl">Çok Güçlü</div>
+          <div class="kcard-name">FU Berlin</div>
+          <p>Sosyal bilimler ve uluslararası ilişkilerde çok aktif bir araştırma ortamı. Akademik kariyer için çok iyi.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="foot">
+    Kaynaklar: QS Dünya Sıralaması 2026, üniversitelerin resmî ücret sayfaları, Turkish Airlines ve şehir turizm ofisleri (2025/26).<br>
+    Bilgiler genel ortalamalardır; kesin durum için ilgili resmî sayfalara bakılmalı.
+  </p>
+
+</div>
+
+</body>
+</html>
